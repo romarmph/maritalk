@@ -1,4 +1,4 @@
-<% if (locals.size) { %>
+<% if (locals.size && locals.fontSize) { %>
 <div class="flex items-center gap-4">
   <?xml version="1.0" encoding="UTF-8"?><svg
     width="<%= size %>"
@@ -43,7 +43,7 @@
     ></path>
   </svg>
   <h1
-    class="py-6 text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600"
+    class="<%= fontSize %> font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600"
   >
     MariTalk
   </h1>
