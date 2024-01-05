@@ -27,10 +27,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get("/", require("./middleware/auth").auth, (req, res) => {
-  res.render("index", { user: req.session.user });
-});
-
 require("./startup_routes")(app);
 
 app.listen(PORT, () => {

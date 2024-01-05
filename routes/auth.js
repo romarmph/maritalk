@@ -6,6 +6,7 @@ const {
   renderRegister,
   requestRegister,
   requestLogout,
+  renderIndex,
 } = require("../controllers/auth");
 
 authRouter.get("/login", renderLogin);
@@ -15,5 +16,7 @@ authRouter.get("/register", renderRegister);
 authRouter.post("/register", requestRegister);
 
 authRouter.get("/logout", auth, requestLogout);
+
+authRouter.get("/", renderIndex);
 
 module.exports = authRouter;

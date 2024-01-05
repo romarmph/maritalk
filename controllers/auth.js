@@ -120,10 +120,21 @@ const requestLogout = (req, res) => {
   res.redirect("/login");
 };
 
+const renderIndex = (req, res) => {
+  const sql = "SELECT * FROM posts JOIN users ON posts.owner_id = users.id";
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error(err);
+    }
+    res.render("index.ejs", { result });
+  });
+};
+
 module.exports = {
   renderLogin,
   renderRegister,
   requestLogin,
   requestLogout,
   requestRegister,
+  renderIndex,
 };
