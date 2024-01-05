@@ -1,0 +1,29 @@
+<div class="flex items-center justify-end gap-2">
+  <% if (totalPages > 1) { %> <% if (current > 1) { %>
+  <a
+    href="<%= prev %>"
+    class="px-2 py-1 font-bold text-gray-700 bg-gray-200 rounded-md"
+    >Previous</a
+  >
+  <% } %> <% let startPage = Math.max(1, current - 5); %> <% let endPage =
+  Math.min(totalPages, startPage + 9); %> <% for(let index = startPage; index <=
+  endPage; index++) { %>
+  <a
+    href="/<%= route %>?page=<%= index %>"
+    class="px-2 py-1 font-bold <%= (index == current) ? 'text-white bg-blue-500' : 'text-gray-700 bg-gray-200' %> rounded-md"
+    ><%= index %></a
+  >
+  <% } %> <% if (current < totalPages) { %>
+  <a
+    href="<%= next %>"
+    class="px-2 py-1 font-bold text-gray-700 bg-gray-200 rounded-md"
+    >Next</a
+  >
+  <% } %> <% } else { %>
+  <a
+    href="/<%= route %>?page=<%= current %>"
+    class="px-2 py-1 font-bold text-white bg-blue-500 rounded-md"
+    ><%= current %></a
+  >
+  <% } %>
+</div>
