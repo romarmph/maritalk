@@ -6,9 +6,9 @@
       action="/login"
     >
       <a href="/">
-        <%- include('./../partials/app-logo.ejs', {size: "32px"}) %> <% if
-        (locals.message) { %>
+        <%- include('./../partials/app-logo.ejs', {size: "32px"}) %>
       </a>
+      <% if (locals.message) { %>
       <div
         class="p-2 mb-2 text-sm text-red-600 bg-red-100 border border-red-500 rounded-lg"
       >
