@@ -33,6 +33,47 @@
       </div>
     </form>
     <ul class="space-y-2">
+      <% if (user) { %>
+      <li>
+        <a
+          href="/create"
+          class="flex items-center gap-2 p-4 text-lg font-medium text-white bg-blue-600 rounded-lg"
+        >
+          <?xml version="1.0" encoding="UTF-8"?><svg
+            width="24px"
+            height="24px"
+            stroke-width="2.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5 text-white"
+          >
+            <path
+              d="M22 14V8.5M6 13V6C6 4.34315 7.34315 3 9 3H14"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+            <path
+              d="M16.9922 4H19.9922M22.9922 4L19.9922 4M19.9922 4V1M19.9922 4V7"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+            <path
+              d="M12 21H6C3.79086 21 2 19.2091 2 17C2 14.7909 3.79086 13 6 13H17H18C15.7909 13 14 14.7909 14 17C14 19.2091 15.7909 21 18 21C20.2091 21 22 19.2091 22 17V14"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+          <span>Create Discussion</span>
+        </a>
+      </li>
+      <% } %>
       <li>
         <a
           href="#"

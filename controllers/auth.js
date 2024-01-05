@@ -28,6 +28,7 @@ const requestLogin = async (req, res) => {
       try {
         if (await argon2.verify(user.password, password)) {
           req.session.user = user;
+          res.locals.user = user;
           res.redirect("/");
         } else {
           req.session.message = "Incorrect password";
@@ -101,12 +102,16 @@ const requestRegister = async (req, res) => {
       }
 
       req.session.message = "Register success";
-      req.session.user = {
+
+      const user = {
         id: result.insertId,
         name,
         email,
         role,
       };
+
+      req.session.user = user;
+      res.locals.user = user;
       res.redirect("/");
     });
   } catch (err) {
