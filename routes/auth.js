@@ -1,6 +1,6 @@
 const authRouter = require("express").Router();
 const { auth } = require("../middleware/auth");
-const {
+const { 
   renderLogin,
   requestLogin,
   renderRegister,
