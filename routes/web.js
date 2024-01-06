@@ -47,7 +47,7 @@ router.get("/post/:id", [getPost], renderPost);
 
 router.post("/create", auth, requestCreatePost);
 
-const postSql = `SELECT * FROM posts WHERE owner_id = ?`;
+const postSql = `SELECT posts.*, users.name, users.email, COUNT(replies.parent_id) AS replies_count FROM posts  JOIN users ON posts.owner_id = users.id  LEFT JOIN replies ON posts.id = replies.parent_id WHERE posts.owner_id = ? GROUP BY posts.id, users.name, users.email`;
 router.get("/profile/:id", paginate(postSql, "profile"), renderProfile);
 
 module.exports = { router };

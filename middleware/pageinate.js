@@ -3,15 +3,8 @@ const db = require("../db");
 
 const paginate = (sql, route) => {
   return async (req, res, next) => {
-    const { page = 1 } = req.query;
-
-    // if (route === "profile") {
-    //   if (!req.params.id) {
-    //     return res.redirect("/");
-    //   }
-    // }
-
-    const { id } = req.params;
+    const page = req.query.page || 1;
+    const id = req.params.id;
 
     let totalPages = 0;
     const query = util.promisify(db.query).bind(db);
@@ -27,8 +20,10 @@ const paginate = (sql, route) => {
       if (totalRecords === 0) {
         const response = {
           result: [],
-          next: `/${route}?page=1`,
-          prev: `/${route}?page=1`,
+          next:
+            route === "profile" ? `/${route}/${id}?page=1` : `/${route}?page=1`,
+          prev:
+            route === "profile" ? `/${route}/${id}?page=1` : `/${route}?page=1`,
           current: 1,
           totalPages: 1,
           route: route,
@@ -59,11 +54,17 @@ const paginate = (sql, route) => {
 
       const response = {
         result: result,
-        next: `/${route}?page=${parseInt(page) + 1}`,
-        prev: `/${route}?page=${parseInt(page) - 1}`,
+        next:
+          route === "profile"
+            ? `/${route}/${id}?page=${parseInt(page) + 1}`
+            : `/${route}?page=${parseInt(page) + 1}`,
+        prev:
+          route === "profile"
+            ? `/${route}/${id}?page=${parseInt(page) - 1}`
+            : `/${route}?page=${parseInt(page) - 1}`,
         current: page,
         totalPages: totalPages,
-        route: route,
+        route: route === "profile" ? `${route}/${id}` : route,
       };
 
       req.response = response;
