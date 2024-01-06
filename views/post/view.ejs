@@ -106,16 +106,18 @@
               Discussion (<%= replies.length %>)
             </h2>
           </div>
-          <form class="mb-6" action="/">
+          <form class="mb-6" action="/reply" method="POST">
+            <input type="hidden" name="postid" value="<%= post.id %>" />
             <div
               class="px-4 py-2 mb-4 bg-white border border-gray-200 rounded-lg rounded-t-lg dark:bg-gray-800 dark:border-gray-700"
             >
-              <label for="comment" class="sr-only">Your comment</label>
+              <label for="reply" class="sr-only">Your reply</label>
               <textarea
-                id="comment"
+                name="reply"
+                id="reply"
                 rows="6"
                 class="w-full px-0 text-sm text-gray-900 border-0 focus:ring-0 dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-                placeholder="Write a comment..."
+                placeholder="Write a reply..."
                 required
               ></textarea>
             </div>
@@ -123,7 +125,7 @@
               type="submit"
               class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
             >
-              Post comment
+              Post reply
             </button>
           </form>
           <% replies.forEach(reply => { %> <%-

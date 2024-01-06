@@ -90,4 +90,20 @@ router.post("/dislike", auth, async (req, res) => {
   }
 });
 
+router.post("/reply", auth, async (req, res) => {
+  const user = req.session.user;
+  const { postid, reply } = req.body;
+
+  const query = util.promisify(db.query).bind(db);
+
+  const sql = `INSERT INTO replies (parent_id, owner_id, content) VALUES (?, ?, ?)`;
+
+  try {
+    const result = await query(sql, [postid, user.id, reply]);
+    res.redirect("/post/" + postid);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 module.exports = { router };
