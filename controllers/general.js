@@ -10,9 +10,44 @@ const renderIndex = (req, res) => {
 };
 
 const renderCreatePost = (req, res) => {
-  res.render("post/create");
+  res.render("post/create"); 
 };
 
+
+// const saveCreatePost = (req, res) => {
+//   const {title, category, content, owner_id } = req.body;
+
+//   if (!title || !category || !content ) {
+//     if (!title) {
+//       req.session.message = "Title is required";
+//       return res.redirect("/create");
+//     }
+//     if (!category) {
+//       req.session.message = "Category is required";
+//       return res.redirect("/create");
+//     }
+//     if (!content) {
+//       req.session.message = "Content is required";
+//       return res.redirect("/create");;
+//     }
+//   }
+//     const sql = `INSERT INTO posts (title, content, owner_id, category) VALUES (?, ?, ?, ?, ?)`;
+//     db.query(sql, [title, content, owner_id, category], (err, result) => {
+//       if (err) {
+//         req.session.message = "Something went wrong";
+//         return res.redirect("/");
+//       }
+//       req.session.message = "Discussion Posted Successfully";
+//       res.redirect("/");
+//     });
+// };
+
+const renderPost = async (req, res) => {
+  res.render("post/view", {
+    post: req.response.post,
+    comments: req.response.comments,
+  });
+};
 
 const renderQuestions = (req, res) => {
   res.render("questions.ejs", {
@@ -76,6 +111,7 @@ const renderPost = async (req, res) => {
   });
 }
 
+
 module.exports = {
   renderIndex,
   renderCreatePost,
@@ -85,4 +121,5 @@ module.exports = {
   renderArticles,
   renderEvents,
   renderIssues,
+  renderOwnedPost,
 };

@@ -3,7 +3,7 @@ const db = require("../db");
 
 const paginate = (sql, route) => {
   return async (req, res, next) => {
-    const { page } = req.query;
+    const { page } = req.query; 
 
     let totalPages = 0;
     const query = util.promisify(db.query).bind(db);
