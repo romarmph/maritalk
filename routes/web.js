@@ -106,4 +106,62 @@ router.post("/reply", auth, async (req, res) => {
   }
 });
 
+router.post("/post/delete", auth, async (req, res) => {
+  const { postid } = req.body;
+  const { user } = req.session;
+
+  const query = util.promisify(db.query).bind(db);
+
+  const sql = `DELETE FROM posts WHERE id = ? AND owner_id = ?`;
+
+  try {
+    const result = await query(sql, [postid, user.id]);
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+router.get("/post/edit/:id", auth, (req, res) => {
+  const { id } = req.params;
+  const { user } = req.session;
+
+  const query = util.promisify(db.query).bind(db);
+
+  const sql = `SELECT * FROM posts WHERE id = ? AND owner_id = ?`;
+
+  query(sql, [id, user.id], (err, result) => {
+    if (err) {
+      console.error(err);
+    }
+    res.render("post/edit", { post: result[0] });
+  });
+});
+
+router.post("/post/update", auth, async (req, res) => {
+  const { postid, title, content, category } = req.body;
+  const { user } = req.session;
+
+  const query = util.promisify(db.query).bind(db);
+
+  console.log(postid, title, content, category, user.id);
+
+  const sql = `UPDATE posts SET title = ?, content = ?, category = ? WHERE id = ? AND owner_id = ?`;
+
+  try {
+    const result = await query(sql, [
+      title,
+      content,
+      category,
+      postid,
+      user.id,
+    ]);
+
+    console.log(result);
+    res.redirect("/post/" + postid);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 module.exports = { router };
