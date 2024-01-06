@@ -23,7 +23,8 @@
       <div
         class="p-4 mx-4 mb-6 bg-gray-100 border border-gray-300 rounded-lg post"
       >
-        <h2 class="mb-1 text-xl font-bold rounded-lg"><%= post.title %></h2>
+
+      <a href="/viewpost/<%= encodeURIComponent(post.title) %>"><h2 class="mb-1 text-xl font-bold rounded-lg"><%= post.title %></h2></a>
         <p class="mb-1 text-gray-800"><%= post.content %></p>
         <div class="flex items-center justify-between gap-4">
           <div class="flex items-center gap-4">

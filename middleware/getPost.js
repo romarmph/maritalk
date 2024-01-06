@@ -30,11 +30,16 @@ const getPost = async (req, res, next) => {
   } catch (err) {
     console.error(err);
   }
+  console.log({
+    post: post,
+    replies: replies,
+  })
 
   req.response = {
     post: post,
     replies: replies,
   };
+
 
   next();
 };

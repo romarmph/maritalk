@@ -125,10 +125,13 @@ const requestLogout = (req, res) => {
   res.redirect("/login"); 
 };
 
+
+
 module.exports = {
   renderLogin,
   renderRegister,
   requestLogin,
   requestLogout,
   requestRegister,
+ 
 };

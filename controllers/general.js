@@ -13,6 +13,7 @@ const renderCreatePost = (req, res) => {
   res.render("post/create"); 
 };
 
+
 // const saveCreatePost = (req, res) => {
 //   const {title, category, content, owner_id } = req.body;
 
@@ -47,6 +48,7 @@ const renderPost = async (req, res) => {
     comments: req.response.comments,
   });
 };
+
 const renderQuestions = (req, res) => {
   res.render("questions.ejs", {
     result: req.response.result,
@@ -102,16 +104,12 @@ const renderIssues = (req, res) => {
   });
 };
 
-const renderOwnedPost = (req, res) => {
-  res.render("owned.ejs", {
-    result: req.response.result,
-    current: req.response.current,
-    next: req.response.next,
-    prev: req.response.prev,
-    totalPages: req.response.totalPages,
-    route: req.response.route,
+const renderPost = async (req, res) => {
+  res.render("post/view",{
+    post: req.response.post,
+    replies: req.response.replies,
   });
-};
+}
 
 
 module.exports = {
