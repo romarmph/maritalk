@@ -3,7 +3,8 @@ const db = require("../db");
 
 const paginate = (sql, route) => {
   return async (req, res, next) => {
-    const { page } = req.query; 
+    const page = req.query.page || 1;
+    const id = req.params.id;
 
     let totalPages = 0;
     const query = util.promisify(db.query).bind(db);
@@ -12,14 +13,17 @@ const paginate = (sql, route) => {
 
     try {
       const countQuery = `SELECT COUNT(*) as total FROM (${sql}) as subquery`;
-      const countResult = await query(countQuery);
+      let countResult = await query(countQuery, [id]);
+
       const totalRecords = countResult[0].total;
 
       if (totalRecords === 0) {
         const response = {
           result: [],
-          next: `/${route}?page=1`,
-          prev: `/${route}?page=1`,
+          next:
+            route === "profile" ? `/${route}/${id}?page=1` : `/${route}?page=1`,
+          prev:
+            route === "profile" ? `/${route}/${id}?page=1` : `/${route}?page=1`,
           current: 1,
           totalPages: 1,
           route: route,
@@ -40,15 +44,27 @@ const paginate = (sql, route) => {
 
     try {
       const resultQuery = `${sql} ORDER BY posts.created_at DESC LIMIT ? OFFSET ?`;
-      const result = await query(resultQuery, [limit, offset]);
+      let result = {};
+
+      if (route !== "profile") {
+        result = await query(resultQuery, [limit, offset]);
+      } else {
+        result = await query(resultQuery, [id, limit, offset]);
+      }
 
       const response = {
         result: result,
-        next: `/${route}?page=${parseInt(page) + 1}`,
-        prev: `/${route}?page=${parseInt(page) - 1}`,
+        next:
+          route === "profile"
+            ? `/${route}/${id}?page=${parseInt(page) + 1}`
+            : `/${route}?page=${parseInt(page) + 1}`,
+        prev:
+          route === "profile"
+            ? `/${route}/${id}?page=${parseInt(page) - 1}`
+            : `/${route}?page=${parseInt(page) - 1}`,
         current: page,
         totalPages: totalPages,
-        route: route,
+        route: route === "profile" ? `${route}/${id}` : route,
       };
 
       req.response = response;

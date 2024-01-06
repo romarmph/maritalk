@@ -122,10 +122,8 @@ const requestRegister = async (req, res) => {
 
 const requestLogout = (req, res) => {
   req.session.destroy();
-  res.redirect("/login"); 
+  res.redirect("/login");
 };
-
-
 
 module.exports = {
   renderLogin,
@@ -133,5 +131,4 @@ module.exports = {
   requestLogin,
   requestLogout,
   requestRegister,
- 
 };
