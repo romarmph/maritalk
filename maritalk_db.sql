@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 05, 2024 at 09:30 PM
+-- Generation Time: Jan 06, 2024 at 02:31 PM
 -- Server version: 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.14
 
@@ -44,7 +44,11 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `title`, `content`, `owner_id`, `likes`, `dislikes`, `created_at`, `updated_at`, `category`) VALUES
-(1, 'post title', 'oh shit oh shit', 2, 24, 2, '2024-01-05 05:16:57', '2024-01-05 05:16:57', '');
+(1, 'post title', 'oh shit oh shit', 2, 24, 2, '2024-01-05 05:16:57', '2024-01-05 05:16:57', ''),
+(2, 'new question', 'Pogi si?', 2, 12, 52, '2024-01-06 06:02:31', '2024-01-06 06:02:31', 'question'),
+(3, 'new idea', 'Maglaro ng apoy sa ilalim ng tubig', 2, 0, 1521, '2024-01-06 06:07:51', '2024-01-06 06:07:51', 'idea'),
+(4, 'new article', 'Ewan ko ba kung bakit', 2, 231, 23, '2024-01-06 06:09:00', '2024-01-06 06:09:00', 'article'),
+(5, 'new issue', 'Si ano nag ganun', 2, 231, 0, '2024-01-06 06:09:32', '2024-01-06 06:09:32', 'issue');
 
 -- --------------------------------------------------------
 
@@ -119,7 +123,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `replies`
