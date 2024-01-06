@@ -11,7 +11,8 @@ const {
   renderIdeas,
   renderArticles,
   renderEvents,
-  renderIssues,
+  renderIssues, 
+  renderOwnedPost,
 } = require("../controllers/general");
 
 const sql =
@@ -21,6 +22,7 @@ const ideasSql ="SELECT posts.*, users.name, users.email FROM posts JOIN users O
 const articlesSql = "SELECT posts.*, users.name, users.email FROM posts JOIN users ON posts.owner_id = users.id";
 const eventsSql = "SELECT posts.*, users.name, users.email FROM posts JOIN users ON posts.owner_id = users.id";
 const issuesSql = "SELECT posts.*, users.name, users.email FROM posts JOIN users ON posts.owner_id = users.id";
+const myPosts = "SELECT posts.*, users.name, users.email FROM posts JOIN users ON posts.owner_id = users.id";
 const route = "";
 router.get("/", paginate(sql, route), renderIndex);
 
@@ -33,5 +35,6 @@ router.get("/ideas", paginate(ideasSql, "ideas"), renderIdeas);
 router.get("/articles", paginate(articlesSql, "articles"), renderArticles);
 router.get("/events", paginate(eventsSql, "events"), renderEvents);
 router.get("/issues", paginate(issuesSql, "issues"), renderIssues);
+router.get("/myPosts", paginate(myPosts, "myposts"), renderOwnedPost);
 
 module.exports = router;
