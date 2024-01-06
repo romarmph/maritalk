@@ -1,3 +1,6 @@
+const db = require("./../db");
+const util = require("util");
+
 const renderIndex = (req, res) => {
   res.render("index.ejs", {
     result: req.response.result,
@@ -10,43 +13,7 @@ const renderIndex = (req, res) => {
 };
 
 const renderCreatePost = (req, res) => {
-  res.render("post/create"); 
-};
-
-
-// const saveCreatePost = (req, res) => {
-//   const {title, category, content, owner_id } = req.body;
-
-//   if (!title || !category || !content ) {
-//     if (!title) {
-//       req.session.message = "Title is required";
-//       return res.redirect("/create");
-//     }
-//     if (!category) {
-//       req.session.message = "Category is required";
-//       return res.redirect("/create");
-//     }
-//     if (!content) {
-//       req.session.message = "Content is required";
-//       return res.redirect("/create");;
-//     }
-//   }
-//     const sql = `INSERT INTO posts (title, content, owner_id, category) VALUES (?, ?, ?, ?, ?)`;
-//     db.query(sql, [title, content, owner_id, category], (err, result) => {
-//       if (err) {
-//         req.session.message = "Something went wrong";
-//         return res.redirect("/");
-//       }
-//       req.session.message = "Discussion Posted Successfully";
-//       res.redirect("/");
-//     });
-// };
-
-const renderPost = async (req, res) => {
-  res.render("post/view", {
-    post: req.response.post,
-    comments: req.response.comments,
-  });
+  res.render("post/create");
 };
 
 const renderQuestions = (req, res) => {
@@ -105,12 +72,28 @@ const renderIssues = (req, res) => {
 };
 
 const renderPost = async (req, res) => {
-  res.render("post/view",{
+  res.render("post/view", {
     post: req.response.post,
     replies: req.response.replies,
   });
-}
+};
 
+const requestCreatePost = async (req, res) => {
+  const { title, content, category } = req.body;
+  const { id } = req.session.user;
+
+  const query = util.promisify(db.query).bind(db);
+
+  const sql = `INSERT INTO posts (title, content, category, owner_id) VALUES (?, ?, ?, ?)`;
+
+  try {
+    const result = await query(sql, [title, content, category, id]);
+    const { insertId } = result;
+    res.redirect("/post/" + insertId);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 module.exports = {
   renderIndex,
@@ -121,5 +104,5 @@ module.exports = {
   renderArticles,
   renderEvents,
   renderIssues,
-  renderOwnedPost,
+  requestCreatePost,
 };

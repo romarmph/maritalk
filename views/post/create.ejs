@@ -9,7 +9,7 @@
         <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
           Start a new discussion
         </h2>
-        <form method="post">
+        <form method="post" action="/create">
           <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
             <div class="sm:col-span-2">
               <label
@@ -35,14 +35,15 @@
               <select
                 id="category"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                name="category"
               >
                 <option selected="">Select category</option>
                 <option value="none">None</option>
-                <option value="questions">Questions</option>
-                <option value="ideas">Ideas</option>
-                <option value="aritcles">Aritcles</option>
-                <option value="events">Events</option>
-                <option value="issues">Issues</option>
+                <option value="question">Questions</option>
+                <option value="idea">Ideas</option>
+                <option value="aritcle">Aritcles</option>
+                <!-- <option value="event">Events</option> -->
+                <option value="issue">Issues</option>
               </select>
             </div>
             <div class="sm:col-span-2">
@@ -52,24 +53,12 @@
                 >Discussion</label
               >
               <textarea
+                name="content"
                 id="content"
                 rows="20"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Your discussion here"
               ></textarea>
-            </div>
-
-            <div class="sm:col-span-2">
-              <% if (user) { %>
-              <input
-                type="hidden"
-                name="owner_id"
-                id="owner_id"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                required=""
-                value="<%= user.id %>"
-              />
-              <% } %>
             </div>
           </div>
           <input

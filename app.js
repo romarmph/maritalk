@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT | 3000;
 const dirname = __dirname;
 
-app.use(express.static(path.join(dirname, "/src/")));
+app.use(express.static(path.join(dirname, "src/css")));
 app.use(ejsLayouts);
 app.use(express.urlencoded({ extended: true }));
 app.use(

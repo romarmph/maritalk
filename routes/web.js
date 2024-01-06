@@ -11,8 +11,8 @@ const {
   renderIdeas,
   renderArticles,
   renderEvents,
-  renderIssues, 
-  renderOwnedPost,
+  renderIssues,
+  requestCreatePost,
 } = require("../controllers/general");
 
 const sql =
@@ -41,9 +41,9 @@ router.get("/events", paginate(eventsSql, "events"), renderEvents);
 const issuesSql =
   "SELECT posts.*, users.name, users.email FROM posts JOIN users ON posts.owner_id = users.id WHERE posts.category = 'issue'";
 router.get("/issues", paginate(issuesSql, "issues"), renderIssues);
-router.get("/myPosts", paginate(myPosts, "myposts"), renderOwnedPost);
 
-router.get("/post/:id", [getPost, auth], renderPost);
+router.get("/post/:id", [getPost], renderPost);
 
+router.post("/create", auth, requestCreatePost);
 
-module.exports = router;
+module.exports = { router };
