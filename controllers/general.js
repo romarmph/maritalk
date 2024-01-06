@@ -1,5 +1,6 @@
 const db = require("./../db");
 const util = require("util");
+const argon2 = require("argon2");
 
 const renderIndex = (req, res) => {
   res.render("index.ejs", {
@@ -138,7 +139,83 @@ const renderProfile = async (req, res) => {
 };
 
 const renderProfileEdirtForm = (req, res) => {
-  res.render("profile/edit");
+  const { user } = req.session;
+  req.session.success = null;
+  req.session.message = null;
+  res.render("account/edit", { user: user });
+};
+
+const requestAccountUpdate = async (req, res) => {
+  const { name, email, oldpassword, newpassword, confirmpassword } = req.body;
+  const { id } = req.session.user;
+
+  console.log(req.body);
+
+  if (!name || !email) {
+    req.session.message = "Please fill name and email";
+    return res.redirect("/account");
+  }
+
+  if (oldpassword && !newpassword && !confirmpassword) {
+    req.session.message = "Please fill new password and confirm password";
+    return res.redirect("/account");
+  }
+
+  if (newpassword && !oldpassword && !confirmpassword) {
+    req.session.message = "Please fill old password and confirm password";
+    return res.redirect("/account");
+  }
+
+  if (confirmpassword && !oldpassword && !newpassword) {
+    req.session.message = "Please fill old password and new password";
+    return res.redirect("/account");
+  }
+
+  if (newpassword && newpassword.length < 6) {
+    req.session.message = "Password must be at least 6 characters";
+    return res.redirect("/account");
+  }
+
+  if (newpassword !== confirmpassword) {
+    req.session.message = "Password does not match";
+    return res.redirect("/account");
+  }
+
+  const query = util.promisify(db.query).bind(db);
+
+  if (newpassword && oldpassword && confirmpassword) {
+    let sql = `SELECT * FROM users WHERE id = ?`;
+    const user = await query(sql, [id]);
+    const { password } = user[0];
+    const result = await argon2.verify(password, oldpassword);
+    if (!result) {
+      req.session.message = "Old password is incorrect";
+      return res.redirect("/account");
+    }
+
+    const hash = await argon2.hash(newpassword);
+    sql = `UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?`;
+    try {
+      await query(sql, [name, email, hash, id]);
+
+      req.session.success = "Account updated";
+      return res.redirect("/account");
+    } catch {
+      console.error(err);
+    }
+  }
+
+  let sql = `UPDATE users SET name = ?, email = ? WHERE id = ?`;
+  try {
+    await query(sql, [name, email, id]);
+  } catch {
+    console.error(err);
+  }
+  req.session.user.name = name;
+  req.session.user.email = email;
+
+  req.session.success = "Account updated";
+  res.redirect("/account");
 };
 
 module.exports = {
@@ -153,4 +230,5 @@ module.exports = {
   requestCreatePost,
   renderProfile,
   renderProfileEdirtForm,
+  requestAccountUpdate,
 };

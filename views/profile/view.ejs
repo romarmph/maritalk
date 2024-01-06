@@ -6,43 +6,6 @@
   <main class="h-auto p-4 pt-20 bg-white md:ml-64 dark:bg-gray-800">
     <div class="flex items-center justify-between">
       <h1 class="mb-2 text-2xl font-bold text-gray-700">Profile</h1>
-      <% if (user) { %>
-      <button
-        id="dropdownMenuIconButton"
-        data-dropdown-toggle="dropdownDots"
-        class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-        type="button"
-      >
-        <svg
-          class="w-5 h-5"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 4 15"
-        >
-          <path
-            d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
-          />
-        </svg>
-      </button>
-      <div
-        id="dropdownDots"
-        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
-      >
-        <ul
-          class="py-2 text-sm text-gray-700 dark:text-gray-200"
-          aria-labelledby="dropdownMenuIconButton"
-        >
-          <li>
-            <a
-              href="/profile/edit"
-              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >Edit Profile</a
-            >
-          </li>
-        </ul>
-      </div>
-      <% } %>
     </div>
     <hr class="mb-2" />
     <div
@@ -51,7 +14,7 @@
       <img
         src="<%= userProfile.photo %>"
         alt="<%= userProfile.name %> profile"
-        class="w-32 h-32 border border-gray-100 rounded-full md:w-48 md:h-48"
+        class="object-cover w-32 h-32 border border-gray-100 rounded-full md:w-48 md:h-48"
       />
       <div class="flex flex-col items-center h-full md:items-start md:gap-1">
         <p class="ml-4 text-2xl font-medium text-gray-700 lg:text-3xl">
@@ -60,7 +23,9 @@
         <p class="ml-4 text-xl font-normal text-gray-500 lg:text-1xl">
           <%= userProfile.email %>
         </p>
-        <p class="ml-4 text-lg font-normal text-gray-500 lg:text-1xl">
+        <p
+          class="ml-4 text-lg font-normal text-gray-500 lg:texhttp://localhost:3000/accountt-1xl"
+        >
           <% let date = new Date(userProfile.created_at) %> Joined <%=
           date.toLocaleString("en-US", {year: 'numeric', month: 'long', day:
           'numeric'}) %>
