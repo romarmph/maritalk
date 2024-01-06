@@ -27,12 +27,13 @@ app.set("view engine", "ejs");
 app.use(function (req, res, next) {
   res.locals.user = req.session.user;
   res.locals.message = req.session.message;
+  console.log(res.locals.user);
   next();
 });
 
 require("./startup_routes")(app);
 
-app.use(errors.handle404);
+// app.use(errors.handle404);
 
 app.listen(PORT, () => {
   console.log(`App running at ${PORT}`);

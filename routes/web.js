@@ -13,6 +13,7 @@ const {
   renderEvents,
   renderIssues,
   requestCreatePost,
+  renderProfile,
 } = require("../controllers/general");
 
 const sql =
@@ -45,5 +46,8 @@ router.get("/issues", paginate(issuesSql, "issues"), renderIssues);
 router.get("/post/:id", [getPost], renderPost);
 
 router.post("/create", auth, requestCreatePost);
+
+const postSql = `SELECT * FROM posts WHERE owner_id = ?`;
+router.get("/profile/:id", paginate(postSql, "profile"), renderProfile);
 
 module.exports = { router };

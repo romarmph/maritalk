@@ -95,6 +95,48 @@ const requestCreatePost = async (req, res) => {
   }
 };
 
+const renderProfile = async (req, res) => {
+  const { id } = req.params;
+
+  const query = util.promisify(db.query).bind(db);
+
+  const sql = `SELECT * FROM users WHERE id = ?`;
+
+  const userSql = `SELECT * FROM users WHERE id = ?`;
+
+  const totalLikesSql = `SELECT SUM(posts.likes) AS total FROM posts JOIN users ON posts.owner_id = users.id WHERE users.id = ?`;
+
+  const totalDislikesSql = `SELECT SUM(posts.dislikes) AS total FROM posts JOIN users ON posts.owner_id = users.id WHERE users.id = ?`;
+
+  const totalRepliesSql = `SELECT COUNT(replies.id) AS total FROM users JOIN posts ON users.id = posts.owner_id LEFT JOIN replies ON posts.id = replies.parent_id WHERE users.id = ?`;
+
+  try {
+    const profile = await query(sql, [id]);
+    const userResult = await query(userSql, [id]);
+    const totalLikes = await query(totalLikesSql, [id]);
+    const totalDislikes = await query(totalDislikesSql, [id]);
+    const totalReplies = await query(totalRepliesSql, [id]);
+
+    console.log(userResult);
+
+    res.render("profile/view", {
+      profile: profile,
+      likes: totalLikes[0].total,
+      dislikes: totalDislikes[0].total,
+      replies: totalReplies[0].total,
+      userProfile: userResult[0],
+      result: req.response.result,
+      current: req.response.current,
+      next: req.response.next,
+      prev: req.response.prev,
+      totalPages: req.response.totalPages,
+      route: req.response.route,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 module.exports = {
   renderIndex,
   renderCreatePost,
@@ -105,4 +147,5 @@ module.exports = {
   renderEvents,
   renderIssues,
   requestCreatePost,
+  renderProfile,
 };

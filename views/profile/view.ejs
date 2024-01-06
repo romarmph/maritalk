@@ -1,0 +1,133 @@
+<div class="antialiased bg-gray-50 dark:bg-gray-900">
+  <!-- Sidebar -->
+  <%- include('./../components/navbar.ejs') %> <%-
+  include('./../components/sidebar.ejs') %>
+
+  <main class="h-auto p-4 pt-20 bg-white md:ml-64 dark:bg-gray-800">
+    <h1 class="mb-2 text-2xl font-bold text-gray-700">Profile</h1>
+    <hr class="mb-2" />
+    <div
+      class="flex flex-col items-center justify-center gap-2 p-3 mb-4 md:justify-start md:items-stretch md:flex-row"
+    >
+      <img
+        src="<%= userProfile.photo %>"
+        alt="<%= userProfile.name %> profile"
+        class="w-32 h-32 border border-gray-100 rounded-full md:w-48 md:h-48"
+      />
+      <div class="flex flex-col items-center h-full md:items-start md:gap-1">
+        <p class="ml-4 text-2xl font-medium text-gray-700 lg:text-3xl">
+          <%= userProfile.name %>
+        </p>
+        <p class="ml-4 text-xl font-normal text-gray-500 lg:text-1xl">
+          <%= userProfile.email %>
+        </p>
+        <p class="ml-4 text-lg font-normal text-gray-500 lg:text-1xl">
+          <% let date = new Date(userProfile.created_at) %> Joined <%=
+          date.toLocaleString("en-US", {year: 'numeric', month: 'long', day:
+          'numeric'}) %>
+        </p>
+        <div
+          class="flex items-center justify-center gap-3 ml-4 text-gray-500 text-md md:justify-start"
+        >
+          <div class="flex items-center gap-2">
+            <?xml version="1.0" encoding="UTF-8"?><svg
+              class="w-5 h-5 text-gray-400"
+              width="24px"
+              height="24px"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              color="currentColor"
+            >
+              <path
+                d="M16.4724 20H4.1C3.76863 20 3.5 19.7314 3.5 19.4V9.6C3.5 9.26863 3.76863 9 4.1 9H6.86762C7.57015 9 8.22116 8.6314 8.5826 8.02899L11.293 3.51161C11.8779 2.53688 13.2554 2.44422 13.9655 3.33186C14.3002 3.75025 14.4081 4.30635 14.2541 4.81956L13.2317 8.22759C13.1162 8.61256 13.4045 9 13.8064 9H18.3815C19.7002 9 20.658 10.254 20.311 11.5262L18.4019 18.5262C18.1646 19.3964 17.3743 20 16.4724 20Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              ></path>
+              <path
+                d="M7 20L7 9"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+            <%= likes %>
+          </div>
+          <div class="flex items-center gap-2">
+            <?xml version="1.0" encoding="UTF-8"?><svg
+              class="w-5 h-5 text-gray-400"
+              width="24px"
+              height="24px"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              color="currentColor"
+            >
+              <path
+                d="M16.4724 3.5H4.1C3.76863 3.5 3.5 3.76863 3.5 4.1V13.9C3.5 14.2314 3.76863 14.5 4.1 14.5H6.86762C7.57015 14.5 8.22116 14.8686 8.5826 15.471L11.293 19.9884C11.8779 20.9631 13.2554 21.0558 13.9655 20.1681C14.3002 19.7497 14.4081 19.1937 14.2541 18.6804L13.2317 15.2724C13.1162 14.8874 13.4045 14.5 13.8064 14.5H18.3815C19.7002 14.5 20.658 13.246 20.311 11.9738L18.4019 4.97376C18.1646 4.10364 17.3743 3.5 16.4724 3.5Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              ></path>
+              <path
+                d="M7 14.5L7 3.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+            <%= dislikes %>
+          </div>
+          <div class="flex items-center gap-2">
+            <?xml version="1.0" encoding="UTF-8"?><svg
+              class="w-5 h-5 text-gray-400"
+              width="24px"
+              height="24px"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              color="currentColor"
+            >
+              <path
+                d="M8 10L12 10L16 10"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+              <path
+                d="M8 14L10 14L12 14"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+              <path
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.8214 2.48697 15.5291 3.33782 17L2.5 21.5L7 20.6622C8.47087 21.513 10.1786 22 12 22Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+            <%= replies %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h2 class="my-4 text-lg font-bold text-gray-700">My Posts</h2>
+    <hr class="mb-2" />
+    <div class="flex flex-col p-2">
+      <% result.forEach(post => { %> <%-
+      include('./../components/post_card.ejs', {post:post}) %> <% }) %>
+    </div>
+    <%- include('./../components/pages.ejs', { current: current, next: next,
+    prev: prev, totalPages: totalPages, route: route, }) %>
+  </main>
+</div>

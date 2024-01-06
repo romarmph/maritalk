@@ -5,6 +5,14 @@ const paginate = (sql, route) => {
   return async (req, res, next) => {
     const { page = 1 } = req.query;
 
+    // if (route === "profile") {
+    //   if (!req.params.id) {
+    //     return res.redirect("/");
+    //   }
+    // }
+
+    const { id } = req.params;
+
     let totalPages = 0;
     const query = util.promisify(db.query).bind(db);
     const limit = 10;
@@ -12,7 +20,8 @@ const paginate = (sql, route) => {
 
     try {
       const countQuery = `SELECT COUNT(*) as total FROM (${sql}) as subquery`;
-      const countResult = await query(countQuery);
+      let countResult = await query(countQuery, [id]);
+
       const totalRecords = countResult[0].total;
 
       if (totalRecords === 0) {
@@ -40,9 +49,13 @@ const paginate = (sql, route) => {
 
     try {
       const resultQuery = `${sql} ORDER BY posts.created_at DESC LIMIT ? OFFSET ?`;
-      const result = await query(resultQuery, [limit, offset]);
+      let result = {};
 
-      console.log(result);
+      if (route !== "profile") {
+        result = await query(resultQuery, [limit, offset]);
+      } else {
+        result = await query(resultQuery, [id, limit, offset]);
+      }
 
       const response = {
         result: result,
