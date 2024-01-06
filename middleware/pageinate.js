@@ -15,8 +15,6 @@ const paginate = (sql, route) => {
       const countResult = await query(countQuery);
       const totalRecords = countResult[0].total;
 
-      console.log(totalRecords);
-
       if (totalRecords === 0) {
         const response = {
           result: [],
@@ -43,8 +41,6 @@ const paginate = (sql, route) => {
     try {
       const resultQuery = `${sql} ORDER BY posts.created_at DESC LIMIT ? OFFSET ?`;
       const result = await query(resultQuery, [limit, offset]);
-
-      console.log(result);
 
       const response = {
         result: result,
