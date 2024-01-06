@@ -42,6 +42,8 @@ const paginate = (sql, route) => {
       const resultQuery = `${sql} ORDER BY posts.created_at DESC LIMIT ? OFFSET ?`;
       const result = await query(resultQuery, [limit, offset]);
 
+      console.log(result);
+
       const response = {
         result: result,
         next: `/${route}?page=${parseInt(page) + 1}`,

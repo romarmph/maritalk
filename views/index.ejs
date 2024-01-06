@@ -3,8 +3,8 @@
   <%- include('./components/navbar.ejs') %> <%-
   include('./components/sidebar.ejs') %>
 
-  <main class="h-auto p-4 pt-20 bg-white md:ml-64 dark:bg-gray-800">
-    <div class="rounded-lg" style="margin-bottom: 1rem">
+  <main class="h-auto p-4 bg-white md:ml-64 dark:bg-gray-800">
+    <!-- <div class="rounded-lg" style="margin-bottom: 1rem">
       <div class="relative inline-block">
         <select
           id="filter"
@@ -17,8 +17,8 @@
           class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
         ></div>
       </div>
-    </div>
-    <div class="w-full px-6 mt-16">
+    </div> -->
+    <div class="w-full mt-20">
       <% result.forEach(post => { %>
       <%- include('./components/post_card.ejs', {post: post}) %>
       <% }) %>
