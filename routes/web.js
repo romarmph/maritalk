@@ -2,6 +2,8 @@ const router = require("express").Router();
 const { auth } = require("../middleware/auth");
 const { paginate } = require("../middleware/pageinate");
 const { getPost } = require("../middleware/getPost");
+const util = require("util");
+const db = require("../db");
 
 const {
   renderIndex,
@@ -55,5 +57,37 @@ router.post("/account/update", auth, requestAccountUpdate);
 
 const postSql = `SELECT posts.*, users.name, users.email, COUNT(replies.parent_id) AS replies_count FROM posts  JOIN users ON posts.owner_id = users.id  LEFT JOIN replies ON posts.id = replies.parent_id WHERE posts.owner_id = ? GROUP BY posts.id, users.name, users.email`;
 router.get("/profile/:id", paginate(postSql, "profile"), renderProfile);
+
+router.post("/like", auth, async (req, res) => {
+  const { postid } = req.body;
+  const { user } = req.session;
+
+  const query = util.promisify(db.query).bind(db);
+
+  const sql = `UPDATE posts SET likes = likes + 1 WHERE id = ?`;
+
+  try {
+    const result = await query(sql, [postid, user.id]);
+    res.redirect("/post/" + postid);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+router.post("/dislike", auth, async (req, res) => {
+  const { postid } = req.body;
+  const { user } = req.session;
+
+  const query = util.promisify(db.query).bind(db);
+
+  const sql = `UPDATE posts SET dislikes = dislikes + 1 WHERE id = ?`;
+
+  try {
+    const result = await query(sql, [postid, user.id]);
+    res.redirect("/post/" + postid);
+  } catch (err) {
+    console.error(err);
+  }
+});
 
 module.exports = { router };
