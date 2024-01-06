@@ -25,6 +25,8 @@ const requestLogin = async (req, res) => {
 
     if (result.length > 0) {
       const user = result[0];
+
+      console.log(user);
       try {
         if (await argon2.verify(user.password, password)) {
           req.session.user = user;

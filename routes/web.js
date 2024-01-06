@@ -106,4 +106,20 @@ router.post("/reply", auth, async (req, res) => {
   }
 });
 
+router.post("/post/delete", auth, async (req, res) => {
+  const { postid } = req.body;
+  const { user } = req.session;
+
+  const query = util.promisify(db.query).bind(db);
+
+  const sql = `DELETE FROM posts WHERE id = ? AND owner_id = ?`;
+
+  try {
+    const result = await query(sql, [postid, user.id]);
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 module.exports = { router };
