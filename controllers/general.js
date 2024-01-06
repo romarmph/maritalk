@@ -137,6 +137,10 @@ const renderProfile = async (req, res) => {
   }
 };
 
+const renderProfileEdirtForm = (req, res) => {
+  res.render("profile/edit");
+};
+
 module.exports = {
   renderIndex,
   renderCreatePost,
@@ -148,4 +152,5 @@ module.exports = {
   renderIssues,
   requestCreatePost,
   renderProfile,
+  renderProfileEdirtForm,
 };
