@@ -22,8 +22,6 @@ router.get("/", paginate(sql, route), renderIndex);
 
 router.get("/create", auth, renderCreatePost);
 
-router.get("/post/:id", [getPost, auth], renderPost);
-
 const questionSql =
   "SELECT posts.*, users.name, users.email FROM posts JOIN users ON posts.owner_id = users.id WHERE posts.category = 'question'";
 router.get("/questions", paginate(questionSql, "questions"), renderQuestions);
@@ -43,5 +41,8 @@ router.get("/events", paginate(eventsSql, "events"), renderEvents);
 const issuesSql =
   "SELECT posts.*, users.name, users.email FROM posts JOIN users ON posts.owner_id = users.id WHERE posts.category = 'issue'";
 router.get("/issues", paginate(issuesSql, "issues"), renderIssues);
+
+router.get("/post/:id", [getPost, auth], renderPost);
+
 
 module.exports = router;

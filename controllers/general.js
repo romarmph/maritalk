@@ -13,12 +13,7 @@ const renderCreatePost = (req, res) => {
   res.render("post/create");
 };
 
-const renderPost = async (req, res) => {
-  res.render("post/view", {
-    post: req.response.post,
-    comments: req.response.comments,
-  });
-};
+
 const renderQuestions = (req, res) => {
   res.render("questions.ejs", {
     result: req.response.result,
@@ -73,6 +68,13 @@ const renderIssues = (req, res) => {
     route: req.response.route,
   });
 };
+
+const renderPost = async (req, res) => {
+  res.render("post/view",{
+    post: req.response.post,
+    replies: req.response.replies,
+  });
+}
 
 module.exports = {
   renderIndex,
