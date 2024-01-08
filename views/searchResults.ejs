@@ -1,0 +1,58 @@
+<div class="antialiased bg-gray-50 dark:bg-gray-900">
+    <!-- Sidebar -->
+    <%- include('./components/navbar.ejs') %> 
+    <%-include('./components/sidebar.ejs') %>
+  
+    <main class="h-auto p-4 bg-white md:ml-64 dark:bg-gray-800">
+        <div class="w-full mt-20"></div>
+<% if (searchResults.length > 0) { %>
+    <% searchResults.forEach((post) => { %>
+      <div class="p-4 mx-4 mb-6 bg-gray-100 border border-gray-300 rounded-lg post">
+        <div class="flex items-center justify-between">
+          <a href="/post/<%= post.id %>">
+            <h2 class="mb-1 text-xl font-bold rounded-lg"><%= post.title %></h2>
+          </a>
+          <!-- Rest of the post content -->
+          <div class="flex items-center gap-2">
+            <!-- Like icon -->
+            <div class="flex items-center gap-2">
+              <svg
+                class="w-6 h-6 text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <!-- Like icon path -->
+              </svg>
+              <span class="text-gray-500 text-md"><%= post.likes %></span>
+            </div>
+            <!-- Unlike icon -->
+            <div class="flex items-center gap-2 p-2">
+              <svg
+                class="w-6 h-6 text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <!-- Unlike icon path -->
+              </svg>
+              <span class="text-gray-500 text-md"><%= post.dislikes %></span>
+            </div>
+          </div>
+        </div>
+        <p class="mb-1 text-gray-800"><%= post.content %></p>
+        <div class="flex flex-col justify-end gap-4 md:items-center md:justify-between md:flex-row">
+          <div class="flex flex-col justify-end gap-1 md:gap-4 md:items-center md:justify-between md:flex-row">
+            <p class="mb-1 text-lg font-bold text-gray-600"><%= post.name %></p>
+            <!-- Additional user details if needed -->
+          </div>
+          <!-- Additional post details if needed -->
+        </div>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <p>No results found.</p>
+  <% } %>
+  

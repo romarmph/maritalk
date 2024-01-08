@@ -4,7 +4,8 @@
       <h2 class="mb-1 text-xl font-bold rounded-lg"><%= post.title %></h2>
     </a>
     <div>
-      <% if (user.id == post.owner_id) { %>
+      <% if (user && user.id == post.owner_id) { %>
+
 
       <button
         id="postmenubutton<%= post.id %>"

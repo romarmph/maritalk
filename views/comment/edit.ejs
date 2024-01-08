@@ -1,0 +1,30 @@
+
+  <div class="antialiased bg-gray-50 dark:bg-gray-900">
+
+    <%- include('./../components/navbar.ejs') %> <%-
+    include('./../components/sidebar.ejs') %>
+  
+    <main class="pt-20 pb-16 antialiased bg-white md:ml-64 lg:pt-16 lg:pb-24 dark:bg-gray-900">
+        <div class="flex justify-between px-4 mx-auto mt-10 max-w-screen-2xl">
+          <article class="w-full max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+            <form action="/comment/update" method="post" class="space-y-4">
+              <input type="hidden" name="commentId" value="<%= comment.id %>">
+    
+              <div>
+                <label for="newContent" class="block text-sm font-medium text-gray-700">Edit Comment:</label>
+                <textarea name="newContent" id="newContent" rows="4" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                  <%= comment.content %>
+                </textarea>
+              </div>
+    
+              <div class="flex justify-end">
+                <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">
+                  Update Comment
+                </button>
+              </div>
+            </form>
+          </article>
+        </div>
+      </main>
+  </div>
+  

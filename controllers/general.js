@@ -217,7 +217,23 @@ const requestAccountUpdate = async (req, res) => {
   req.session.success = "Account updated";
   res.redirect("/account");
 };
+const searchPosts = async (req, res) => {
+  const { q } = req.query;
 
+  // Perform a search query using the input 'q'
+  const searchResults = await performSearchQuery(q);
+
+  res.render("searchResults.ejs", { searchResults });
+};
+
+const performSearchQuery = async (query) => {
+  // Perform your search query logic here, e.g., search by post title or content
+  const queryAsync = util.promisify(db.query).bind(db);
+  const sql = `SELECT * FROM posts WHERE title LIKE ? OR content LIKE ?`;
+  const searchResults = await queryAsync(sql, [`%${query}%`, `%${query}%`]);
+  
+  return searchResults;
+};
 module.exports = {
   renderIndex,
   renderCreatePost,
@@ -231,4 +247,5 @@ module.exports = {
   renderProfile,
   renderProfileEdirtForm,
   requestAccountUpdate,
+  searchPosts,
 };
