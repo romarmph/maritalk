@@ -229,9 +229,14 @@ const searchPosts = async (req, res) => {
 const performSearchQuery = async (query) => {
   // Perform your search query logic here, e.g., search by post title or content
   const queryAsync = util.promisify(db.query).bind(db);
-  const sql = `SELECT * FROM posts WHERE title LIKE ? OR content LIKE ?`;
+  const sql = `SELECT posts.*, users.name, users.email, COUNT(replies.parent_id) AS replies_count
+  FROM posts
+  JOIN users ON posts.owner_id = users.id
+  LEFT JOIN replies ON posts.id = replies.parent_id
+  WHERE posts.title LIKE ? OR posts.content LIKE ?
+  GROUP BY posts.id, users.name, users.email`;
   const searchResults = await queryAsync(sql, [`%${query}%`, `%${query}%`]);
-  
+
   return searchResults;
 };
 module.exports = {
